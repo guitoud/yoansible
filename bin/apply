@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Written by guitoud
+# 2017-07-08
+#
+# Apply the ansible role provided by this project on localhost.
+
+set -o nounset
+
+root="$(dirname "$0")/.."
+pushd "${root}" >/dev/null
+
+ansible-playbook -i localhost, site.yml "$@"

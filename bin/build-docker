@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+# Written by guitoud
+# 2017-07-08
+#
+# Build the docker container provided by this project.
+
+set -o nounset
+[ "${CI_SERVER:-}" = "yes" ] && set -x
+
+# TODO: enable cross-platform compatibility with macOS
+root="$(readlink -f "$(dirname "$0")" | sed -r 's/\/bin.*//')"
+image="$(eval echo "$(cat tag)")"
+version="$(cat "${root}/version")"
+release_date="$(date +%Y-%m-%d:%H:%M)"
+
+cd "${root}" || exit -1
+
+docker build \
+       --build-arg VERSION="${version}" \
+       --build-arg RELEASE_DATE="${release_date}" \
+       -t "${image}:${version}" \
+       .

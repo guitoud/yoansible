@@ -1,0 +1,15 @@
+---
+# Master playbook for yoansible.
+#
+# Written by guitoud
+# 2017-07-08
+
+- hosts: localhost
+
+  vars:
+    ansible_connection: local
+    ansible_user: "{{ lookup('env','USER') }}"
+    ansible_python_interpreter: "/usr/bin/env python2"
+
+  roles:
+    - "{{ playbook_dir }}"  # yoansible

@@ -13,4 +13,18 @@ ENV PATH /usr/share/lib/ansible/ansible/bin:/bin:/usr/bin:/sbin:/usr/sbin
 ENV PYTHONPATH /usr/share/lib/ansible/ansible/lib
 ENV ANSIBLE_LIBRARY /usr/share/lib/ansible/ansible/library
 
+WORKDIR /
+RUN mkdir -p ansible
+COPY site.yml /ansible/site.yml
+COPY defaults /ansible/defaults
+COPY tasks /ansible/tasks
+COPY vars /ansible/vars
+
+ARG PLATFORM
+
+RUN ansible-playbook -i localhost, \
+-e "platform=${PLATFORM} skip_tools=true" /ansible/site.yml \
+&& rm -rf /ansible \
+&& yum clean-all \
+&& rm -rf /var/cache/yum/*
 
